@@ -35,9 +35,8 @@ public class BigIntegerTest {
 		}
 		//抽蓝球
 		Integer blueBall = redBallPool[ran.nextInt(blueBallPool.length)];
-		//打印下注号码
-		System.out.println(buyNum.toString());
 		//打印中奖号码
+		System.out.println("以下为中奖号码！");
 		System.out.println(set.toString()+"  "+blueBall);
 	}
 
