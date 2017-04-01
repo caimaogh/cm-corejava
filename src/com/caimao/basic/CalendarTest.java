@@ -75,6 +75,7 @@ public class CalendarTest {
 		}
 		while(currData.get(Calendar.MONTH)==month);
 		
+		
 		if(weekday!=firstDayOfWeek){
 			System.out.println("  ");
 		}
