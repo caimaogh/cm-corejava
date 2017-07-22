@@ -23,7 +23,6 @@ public class UnSynchBankTest {
 		Bank b = new Bank(NACCOUNTS,INITAL_BALANCE);
 		int i;
 		for(i=0;i<NACCOUNTS;i++){
-			System.out.println("=============="+i);
 			TransferRunnable r = new TransferRunnable(b, i, INITAL_BALANCE);
 			Thread t = new Thread(r);
 			t.start();

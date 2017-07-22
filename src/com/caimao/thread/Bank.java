@@ -3,6 +3,10 @@
  */
 package com.caimao.thread;
 
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * <p>Title: Bank.java</p>
  * <p>Description: </p>
@@ -15,6 +19,8 @@ package com.caimao.thread;
 public class Bank {
 
 	private final double[] accounts;
+//	private Lock bankLock;
+//	private Condition sufficientFunds;
 	/**
 	 * Constructs the bank
 	 * @param n the number of accounts
@@ -24,6 +30,8 @@ public class Bank {
 		accounts = new double[n];
 		for(int i=0;i<accounts.length;i++){
 			accounts[i] = initalBalance;
+//			bankLock = new ReentrantLock();
+//			sufficientFunds = bankLock.newCondition();
 		}
 	}
 	/**
@@ -31,29 +39,42 @@ public class Bank {
 	 * @param from the account to transfer from
 	 * @param to the account to transfer to
 	 * @param amount the amount to transfer
+	 * @throws InterruptedException 
 	 */
-	public void transfer(int from,int to,double amount){
-		if(accounts[from]<amount){
-			return;
+	public synchronized void transfer(int from,int to,double amount) throws InterruptedException{
+//		bankLock.lock();
+		try {
+			while(accounts[from]<amount)
+				wait();
+//			sufficientFunds.await();
+			System.out.println(Thread.currentThread()+"---"+Thread.currentThread().getState());
+			accounts[from]-=amount;
+			accounts[to]+=amount;
+			System.out.println(Thread.currentThread()+",amount="+amount+",from="+from+",to="+to);
+			System.out.println(Thread.currentThread()+",Total Balance:"+getTotalBalance());
+		} finally{
+//			bankLock.unlock();
+			notifyAll();
 		}
-		System.out.println(Thread.currentThread());
-		System.out.println(Thread.currentThread().getState());
-		accounts[from]-=amount;
-		System.out.println(Thread.currentThread()+",amount="+amount+",from="+from+",to="+to);
-		accounts[to]+=amount;
-		System.out.println(Thread.currentThread()+",Total Balance:"+getTotalBalance());
 	}
 	
 	/**
 	 * gets the sum of accounts balances
 	 * return the total balance
 	 */
-	public double getTotalBalance(){
-		double sum = 0;
-		for(double a : accounts){
-			sum += a;
+	public synchronized double getTotalBalance(){
+//		bankLock.lock();
+		double sum;
+		try {
+			sum = 0;
+			for(double a : accounts){
+				sum += a;
+			}
+			return sum;
+		}  finally{
+//			bankLock.unlock();
+			notifyAll();
 		}
-		return sum;
 	}
 	
 	/**
