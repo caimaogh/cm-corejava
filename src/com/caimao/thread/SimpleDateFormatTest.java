@@ -32,7 +32,7 @@ public class SimpleDateFormatTest {
 //		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String date = TimeUtil.formatDate(new Date(), TimeUtil.YEAR_MONTH_DAY);
 		String dateTime = "2017-11-16 23:59:01";
-		for(int i = 0; i < 5; i++){
+		for(int i = 0; i < 500000; i++){
 			new Thread(new Runnable(){
 				@Override
 				public void run() {
