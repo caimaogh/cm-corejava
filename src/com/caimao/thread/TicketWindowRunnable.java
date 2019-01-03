@@ -4,17 +4,20 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 public class TicketWindowRunnable implements Runnable{
-    public int index = 1;
-    public static final int MaxNum= 5000;
+    private int index = 1;
+    public final static int MaxNum= 500;
+    private final static Object MUTEX = new Object();
     @Override
     public void run() {
-        while(MaxNum>=index){
-            System.out.println(Thread.currentThread().getName()+"的号码是："+(index++));
-        }
-        try{
-            TimeUnit.SECONDS.sleep(1);
-        }catch(InterruptedException e){
-            e.printStackTrace();
+        synchronized (MUTEX) {
+            while (MaxNum >= index) {
+                System.out.println(Thread.currentThread().getName() + "的号码是：" + (index++));
+            }
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -30,7 +33,7 @@ public class TicketWindowRunnable implements Runnable{
         th4.start();
 
         IntStream.range(0, 5).boxed().map(i -> new Thread(
-                () -> System.out.println("============"+Thread.currentThread().getName())
+                () -> System.out.println("ThreadName:"+Thread.currentThread().getName())
         )).forEach(Thread::start);
     }
 
