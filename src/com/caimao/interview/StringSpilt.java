@@ -3,15 +3,18 @@ package com.caimao.interview;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+/**
+ * 西门子上机题2019年1月，实现String类的 split 方法，限时半小时
+ */
 
-public class StringSpilt {
+public class StringSplit {
     public static void main(String[] args){
         String s = "#abcd#ef#g";
-        System.out.println("===true========="+spilt(s, '#', true));
-        System.out.println("===false========="+spilt(s, '#', false));
+        System.out.println("===true========="+split(s, '#', true));
+        System.out.println("===false========="+split(s, '#', false));
     }
 
-    private static String[] spilt(String s, char c, boolean flag){
+    private static String[] split(String s, char c, boolean flag){
 
         char[] target = s.toCharArray();
         List<String> list = new ArrayList<String>();
