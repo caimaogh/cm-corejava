@@ -18,16 +18,23 @@ public class Exercise001 {
      */
     public static void main(String[] args){
         Exercise001 ex001 = new Exercise001();
-        int[] nums = {8, 3, 8, 9, 7, 9};
-        int target = 18;
-        try{
-            int[] result = ex001.twoSum(nums, target);
-            System.out.println(Arrays.toString(result));
-        }catch(IllegalArgumentException e){
-            System.out.println(e.getMessage());
+//        int[] nums = {8, 3, 8, 9, 7, 9};
+//        int target = 18;
+//        try{
+//            int[] result = ex001.twoSum(nums, target);
+//            System.out.println(Arrays.toString(result));
+//        }catch(IllegalArgumentException e){
+//            System.out.println(e.getMessage());
+//        }
+//
+//        System.out.println(ex001.maxLengthSubString("abcbaefaecdfd"));
+        String test = "上海自来水来自海上";
+        boolean result = ex001.checkPalindrome(test);
+        if(result){
+            System.out.println("字符串 "+test+" 不是回文！");
+        }else{
+            System.out.println("字符串 "+test+" 是回文！");
         }
-
-        System.out.println(ex001.maxLengthSubString("abcbaefaecdfd"));
     }
 
     public int[] twoSum(int[] nums, int target){
@@ -60,5 +67,20 @@ public class Exercise001 {
         }
         System.out.println("最长子串长度是:"+maxLengtn+",子串:"+subString);
         return maxLengtn;
+    }
+    /*
+     * 判断字符串是否是回文
+     */
+    public boolean checkPalindrome(String str){
+        boolean result = false;
+        char[] chars = str.toCharArray();
+        for(int i = 0; i < chars.length; i++){
+            if(chars[i] != chars[chars.length - i - 1]){
+                System.out.println("chars[i]="+chars[i]+",chars[chars.length - i - 1]="+chars[chars.length - i - 1]);
+                result = true;
+                break;
+            }
+        }
+        return result;
     }
 }
